@@ -1,0 +1,3 @@
+#!/usr/bin/execlineb -P
+fdmove -c 2 1
+/usr/sbin/lircd --nodaemon --driver=iguanair --output=/run/lircd.sock --pidfile=/run/lircd.pid
