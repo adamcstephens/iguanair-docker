@@ -2,9 +2,6 @@ version: "3.5"
 
 services:
   lirc:
-    build:
-      context: .
-      target: final
     image: local/iguanair
     privileged: true
     volumes:
