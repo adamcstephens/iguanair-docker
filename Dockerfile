@@ -2,7 +2,12 @@
 FROM debian:bullseye-slim AS base
 
 ARG S6_OVERLAY_VERSION=v2.2.0.3
+ARG S6_ARCH=amd64
 ENV S6_OVERLAY_VERSION=$S6_OVERLAY_VERSION
+ENV S6_ARCH=$S6_ARCH
+
+ARG DEB_ARCH=amd64
+ENV DEB_ARCH=$DEB_ARCH
 
 RUN apt-get update
 
@@ -44,11 +49,11 @@ FROM base AS final
 RUN apt-get --yes install --no-install-recommends ca-certificates curl procps
 
 WORKDIR /tmp
-COPY --from=build /build/iguanair_1.2.0_amd64.deb /build/libiguanair0_1.2.0_amd64.deb /build/lirc-drv-iguanair_1.2.0_amd64.deb ./
+COPY --from=build /build/iguanair_1.2.0_${DEB_ARCH}.deb /build/libiguanair0_1.2.0_${DEB_ARCH}.deb /build/lirc-drv-iguanair_1.2.0_${DEB_ARCH}.deb ./
 RUN dpkg -i *.deb; apt-get --fix-broken --yes --no-install-recommends install && apt-get clean && rm -rf /var/cache/apt
 RUN rm -rf /tmp/*.deb /etc/lirc/lircd.conf.d/devinput.lircd.conf
 
-RUN curl -L https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz | tar xz -C /
+RUN curl -L https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-${S6_ARCH}.tar.gz | tar xz -C /
 
 WORKDIR /
 
