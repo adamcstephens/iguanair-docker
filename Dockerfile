@@ -58,6 +58,7 @@ RUN curl -L https://github.com/just-containers/s6-overlay/releases/download/${S6
 WORKDIR /
 
 COPY services.d/ /etc/services.d/
+COPY cont-init.d/ /etc/cont-init.d/
 COPY lirc/ /etc/lirc/
 
 ENTRYPOINT /init
