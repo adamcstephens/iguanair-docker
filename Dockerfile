@@ -61,4 +61,6 @@ COPY services.d/ /etc/services.d/
 COPY cont-init.d/ /etc/cont-init.d/
 COPY lirc/ /etc/lirc/
 
+EXPOSE 8765
+
 ENTRYPOINT /init
