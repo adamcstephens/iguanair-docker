@@ -6,3 +6,8 @@ services:
     privileged: true
     volumes:
       - /dev/bus/usb:/dev/bus/usb
+  api:
+    command: -s lirc:8765
+    image: ghcr.io/adamcstephens/lirc-web-api
+    ports:
+      - 3000:3000
