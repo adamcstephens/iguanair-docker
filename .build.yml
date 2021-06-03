@@ -33,3 +33,8 @@ tasks:
       set -x
       buildah bud -f Dockerfile --tag $image_tag-$DEB_ARCH --target final --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH .
       buildah push $image_tag-$DEB_ARCH
+
+  - manifest: |
+      buildah manifest create localhost/list
+      buildah manifest add localhost/list $image_tag-amd64
+      buildah manifest push localhost/list docker://$image_tag
