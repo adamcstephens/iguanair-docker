@@ -22,7 +22,10 @@ tasks:
       buildah login -u $registry_user --password-stdin < ~/.password $registry
 
   - build: |
-      buildah bud -f Dockerfile --tag $image_tag-$DEB_ARCH --target final --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH .
+      buildah bud -f Dockerfile --tag $image_tag-$DEB_ARCH --target final \
+        --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH \
+        --label=org.opencontainers.image.source=https://git.sr.ht/~adamcstephens/iguanair-docker \
+        iguanair-docker
 
   - push: |
       buildah push $image_tag-$DEB_ARCH
