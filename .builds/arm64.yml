@@ -15,9 +15,10 @@ environment:
 secrets:
   - 5ef670eb-40ae-44d9-a8f9-350ac3cfb00c
 tasks:
-  # - skip_if_not_release: |
-  #     cd $project
-  #     git describe --exact-match HEAD || complete-build
+  - skip_if_not_release: |
+      cd $project
+      git describe --exact-match HEAD || complete-build
+
   - login: |
       cd $project
       buildah login -u $registry_user --password-stdin < ~/.password $registry
