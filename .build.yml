@@ -6,7 +6,9 @@ sources:
   - https://git.sr.ht/~adamcstephens/iguanair-docker
 environment:
   project: iguanair-docker
-  image_tag: quay.io/adamcstephens/iguanair-docker:latest
+  image_tag: quay.io/adamcstephens/iguanair:latest
+  registry_user: adamcstephens+srht
+  registry: quay.io
 secrets:
   - 5ef670eb-40ae-44d9-a8f9-350ac3cfb00c
 tasks:
@@ -15,7 +17,7 @@ tasks:
   #     git describe --exact-match HEAD || complete-build
   - build: |
       cd $project
-      buildah login -u adamcstephens+srht  --password-stdin < ~/.password quay.io
+      buildah login -u $registry_user --password-stdin < ~/.password $registry
 
       if [[ "$(uname -m)" == "x86_64" ]]; then
         S6_ARCH=amd64
