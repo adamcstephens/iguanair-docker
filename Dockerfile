@@ -9,7 +9,7 @@ ENV S6_ARCH=$S6_ARCH
 ARG DEB_ARCH=amd64
 ENV DEB_ARCH=$DEB_ARCH
 
-RUN apt-get update
+RUN apt-get update && apt-get --yes upgrade
 
 FROM base AS build
 
