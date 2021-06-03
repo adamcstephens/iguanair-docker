@@ -29,5 +29,5 @@ tasks:
       fi
 
       set -x
-      buildah bud -f Dockerfile --tag $image_tag --target final --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH .
-      buildah push $image_tag
+      buildah bud -f Dockerfile --tag $image_tag-$DEB_ARCH --target final --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH .
+      buildah push $image_tag-$DEB_ARCH
