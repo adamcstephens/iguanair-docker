@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+sudo addgroup $(whoami) docker
+sudo service docker start
+set +e
+docker_ps_return=1
+until [ ${docker_ps_return} -eq 0 ]; do
+  docker ps >/dev/null 2>&1
+  docker_ps_return=$?
+  sleep 1
+done
+set -e

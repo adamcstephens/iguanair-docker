@@ -1,0 +1,17 @@
+image: debian/bullseye
+packages:
+  - buildah
+sources:
+  - https://git.sr.ht/~adamcstephens/iguanair-docker
+environment:
+  project: iguanair-docker
+shell: true
+tasks:
+  - skip_if_not_release: |
+      cd $project
+      git describe --exact-match HEAD || complete-build
+  # - setup: |
+  #     .build/docker-start
+  # - publish: |
+  #     cat ~/.docker-hub-personal-access-token | docker login --username $docker_username --password-stdin
+  #     docker push $docker_image --all-tags
