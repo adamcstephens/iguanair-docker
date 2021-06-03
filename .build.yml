@@ -9,29 +9,22 @@ environment:
   image_tag: quay.io/adamcstephens/iguanair:latest
   registry_user: adamcstephens+srht
   registry: quay.io
+  S6_ARCH: amd64
+  DEB_ARCH: amd64
 secrets:
   - 5ef670eb-40ae-44d9-a8f9-350ac3cfb00c
 tasks:
   # - skip_if_not_release: |
   #     cd $project
   #     git describe --exact-match HEAD || complete-build
-  - build: |
+  - login: |
       cd $project
       buildah login -u $registry_user --password-stdin < ~/.password $registry
 
-      if [[ "$(uname -m)" == "x86_64" ]]; then
-        S6_ARCH=amd64
-        DEB_ARCH=amd64
-      elif [[ "$(uname -m)" == "x86_64" ]]; then
-        S6_ARCH=aarch64
-        DEB_ARCH=arm64
-      else
-        echo "unsupported arch"
-        exit 1
-      fi
-
-      set -x
+  - build: |
       buildah bud -f Dockerfile --tag $image_tag-$DEB_ARCH --target final --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH .
+
+  - push: |
       buildah push $image_tag-$DEB_ARCH
 
   - manifest: |
