@@ -36,7 +36,8 @@ fi
 
 export DOCKER_BUILDKIT=1
 
-docker build -t $TAG . --target $TARGET --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH $FORCE
+set -x
+buildah bud -f Dockerfile --tag $TAG --target $TARGET --build-arg S6_ARCH=$S6_ARCH --build-arg DEB_ARCH=$DEB_ARCH $FORCE .
 ```
 
 ### build build
