@@ -2,8 +2,9 @@ version: "3.5"
 
 services:
   lirc:
-    image: local/iguanair
+    image: quay.io/adamcstephens/iguanair
     privileged: true
+    restart: unless-stopped
     volumes:
       - /dev/bus/usb:/dev/bus/usb
   api:
@@ -11,3 +12,4 @@ services:
     image: ghcr.io/adamcstephens/lirc-web-api
     ports:
       - 3000:3000
+    restart: unless-stopped
