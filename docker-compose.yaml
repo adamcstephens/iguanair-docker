@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     volumes:
       - /dev/bus/usb:/dev/bus/usb
+      - ./lirc/lircd.conf.d:/etc/lirc/lircd.conf.d
   api:
     command: -s lirc:8765
     image: ghcr.io/adamcstephens/lirc-web-api
