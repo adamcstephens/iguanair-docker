@@ -1,0 +1,30 @@
+image: alpine/latest
+packages:
+  - docker
+  - wget
+sources:
+  - https://git.sr.ht/~adamcstephens/iguanair-docker
+environment:
+  earthly_version: v0.6.14
+  registry_user: adamcstephens+srht
+  registry: quay.io
+secrets:
+  - 5ef670eb-40ae-44d9-a8f9-350ac3cfb00c
+tasks:
+  - docker-bootstrap: |
+      echo 'DOCKER_OPTS="--group build"' | sudo tee /etc/conf.d/docker
+      sudo rc-service docker start
+      sleep 1
+      docker run --privileged --rm multiarch/qemu-user-static --reset --persistent yes
+
+  - docker-login: |
+      cd $project
+      docker login -u $registry_user --password-stdin < ~/.password $registry
+
+  - earthly-bootstrap: |
+      sudo /bin/sh -c "wget https://github.com/earthly/earthly/releases/download/$earthly_version/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly"
+      earthly --version
+
+  - build-push: |
+      cd iguanair-docker
+      earthly --push --ci +build-all-platforms
