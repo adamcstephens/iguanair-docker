@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   lirc:
-    image: quay.io/adamcstephens/iguanair
+    image: localhost/iguanair-docker:latest
     privileged: true
     restart: unless-stopped
     volumes:

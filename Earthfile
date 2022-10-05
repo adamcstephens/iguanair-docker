@@ -80,4 +80,5 @@ build-image:
   ENTRYPOINT /init
 
   LABEL org.opencontainers.image.source=https://git.sr.ht/~adamcstephens/iguanair-docker
-  SAVE IMAGE --push quay.io/adamcstephens/iguanair:latest
+  # SAVE IMAGE --push quay.io/adamcstephens/iguanair:latest
+  SAVE IMAGE localhost/iguanair-docker:latest
